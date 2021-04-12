@@ -10,17 +10,8 @@ import Login from './components/Login'
 import useToken from './components/useToken'
 
 
-function setToken(userToken) {
-  sessionStorage.setItem('token', JSON.stringify(userToken));
-}
-
-function getToken() {
-  const tokenString = sessionStorage.getItem('token');
-  const userToken = JSON.parse(tokenString);
-  return userToken?.token
-}
-
 const App = () => {
+  const { token, setToken } = useToken();
   const [showAddTask, setShowAddTask] = useState(false)
   const [tasks, setTasks] = useState([
     {
@@ -54,13 +45,10 @@ const addTask = (task) => {
     )
   }
 
-  const { token, setToken } = useToken();
-
   if(!token) {
     return <Login setToken={setToken} />
   }
 
-  
   return (
     <div className='container'>
       <h1 className="wrapper">Application</h1>
