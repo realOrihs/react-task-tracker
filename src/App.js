@@ -1,8 +1,24 @@
 /* eslint-disable no-template-curly-in-string */
 import Header from './components/Header'
 import Tasks from './components/Tasks'
-import { useState } from 'react'
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import React, { useState } from 'react'
 import AddTask from './components/AddTask'
+import Preferences from './components/Preferences'
+import Dashboard from './components/Dashboard'
+import Login from './components/Login'
+import useToken from './components/useToken'
+
+
+function setToken(userToken) {
+  sessionStorage.setItem('token', JSON.stringify(userToken));
+}
+
+function getToken() {
+  const tokenString = sessionStorage.getItem('token');
+  const userToken = JSON.parse(tokenString);
+  return userToken?.token
+}
 
 const App = () => {
   const [showAddTask, setShowAddTask] = useState(false)
@@ -14,6 +30,7 @@ const App = () => {
       reminder: true,
     }
   ])
+  
 
   // Add Task
 const addTask = (task) => {
@@ -37,17 +54,39 @@ const addTask = (task) => {
     )
   }
 
+  const { token, setToken } = useToken();
+
+  if(!token) {
+    return <Login setToken={setToken} />
+  }
+
+  
   return (
     <div className='container'>
-      <Header onAdd={() => setShowAddTask
-     (!showAddTask)} showAdd={showAddTask}/>
-      {showAddTask && <AddTask onAdd={addTask} 
-      />}
+      <h1 className="wrapper">Application</h1>
+      <BrowserRouter>
+        <Switch>
+          <Route path="/task-tracker">
+          <Header onAdd={() => setShowAddTask
+        (!showAddTask)} showAdd={showAddTask}/>
+          {showAddTask && <AddTask onAdd={addTask} 
+          />}
 
-      {tasks.length > 0 ?   
-      <Tasks tasks = {tasks}
-        onDelete = {deleteTask}
-        onToggle = {toggleReminder} /> : 'No Tasks To Show'}
+          {tasks.length > 0 ?   
+          <Tasks tasks = {tasks}
+            onDelete = {deleteTask}
+            onToggle = {toggleReminder} /> : 'No Tasks To Show'}
+          </Route>
+
+          <Route path="/dashboard">
+            <Dashboard />
+          </Route>
+          
+          <Route path="/preferences">
+            <Preferences />
+          </Route>
+        </Switch>
+      </BrowserRouter>
     </div>  
   )
 }
