@@ -6,46 +6,54 @@ async function loginUser(credentials) {
   return fetch('http://localhost:8080/login', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify(credentials)
+    body: JSON.stringify(credentials),
   })
-    .then(data => data.json())
- }
+      .then((data) => data.json())
+      .catch(error => {
+          console.error(error);
+        });
+
+}
 
 export default function Login({ setToken }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
-  
-  const handleSubmit = async e => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const token = await loginUser({
       username,
-      password
+      password,
     });
     setToken(token);
-  }
+  };
 
-  return(
+  return (
     <div className="login-wrapper">
       <h1>Авторизация на сайте</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          <p>Логин:</p>
-          <input type="text" onChange={e => setUserName(e.target.value)} />
-        </label>
+      <form className="add-form" onSubmit={handleSubmit}>
+        <div className="form-control">
+          <label>
+            <p>Логин:</p>
+            <input type="text" onChange={(e) => setUserName(e.target.value)} />
+          </label>
+        </div>
+        <div className="form-control">
         <label>
           <p>Пароль:</p>
-          <input type="password" onChange={e => setPassword(e.target.value)} />
+          <input type="password" onChange={(e) => setPassword(e.target.value)} />
         </label>
-        <div>
+        </div>
+        <div className="btn btn-block">
           <button type="submit">войти</button>
         </div>
       </form>
     </div>
-  )
+  );
 }
 
 Login.propTypes = {
-  setToken: PropTypes.func.isRequired
-}
+  setToken: PropTypes.func.isRequired,
+};
