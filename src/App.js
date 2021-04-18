@@ -10,6 +10,7 @@ import Preferences from './components/Preferences';
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
 import useToken from './components/useToken';
+import RoadmapsListComponent from "./components/Roadmap/components/RoadmapsList";
 
 function PublicHomePage() {
   return null;
@@ -60,7 +61,8 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            <Redirect to="/task-tracker" />
+            {/*<Redirect to="/task-tracker" />*/}
+            <RoadmapsListComponent />
           </Route>
           <Route path="/task-tracker">
             <Header
