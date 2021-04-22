@@ -1,17 +1,15 @@
-import React from "react";
-import { Route, Switch, useRouteMatch } from "react-router-dom";
-import RoadmapDetailComponent from "./components/RoadmapDetail";
+import React from 'react';
+import { Route, Switch, useRouteMatch } from 'react-router-dom';
+import RoadmapDetailComponent from './components/RoadmapDetail';
 
-const CampaignComponent = () => {
-    const { path } = useRouteMatch();
+const RoadmapComponent = () => {
+  const { path } = useRouteMatch();
 
-    return (
-        <div className="campaign-list">
-            <Switch>
-                <Route path={`${path}/:id`} component={CampaignDetailComponent} />
-            </Switch>
-        </div>
-    );
+  return (
+    <Switch>
+      <Route path={`${path}/:id`} component={RoadmapDetailComponent} />
+    </Switch>
+  );
 };
 
-export default CampaignComponent;
+export default RoadmapComponent;

@@ -20,11 +20,26 @@ body {
   border-radius: 5px;
 }
 
+.main{
+  max-width: 90%;
+  margin: 30px auto;
+  overflow: auto;
+  max-height: 90%;
+  border: 1px solid steelblue;
+  padding: 30px;
+  border-radius: 5px;
+}
+
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
+}
+
+.button{
+  padding-bottom: 20px;
 }
 
 .btn {
@@ -114,4 +129,13 @@ footer {
 .wrapper {
   padding: 20px;
   text-align: center;
+}
+
+.roadmapli {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  border: 1px solid steelblue;
+  padding: 2px;
 }

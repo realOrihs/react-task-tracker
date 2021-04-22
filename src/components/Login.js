@@ -10,11 +10,10 @@ async function loginUser(credentials) {
     },
     body: JSON.stringify(credentials),
   })
-      .then((data) => data.json())
-      .catch(error => {
-          console.error(error);
-        });
-
+    .then((data) => data.json())
+    .catch((error) => {
+      console.error(error);
+    });
 }
 
 export default function Login({ setToken }) {
@@ -41,10 +40,10 @@ export default function Login({ setToken }) {
           </label>
         </div>
         <div className="form-control">
-        <label>
-          <p>Пароль:</p>
-          <input type="password" onChange={(e) => setPassword(e.target.value)} />
-        </label>
+          <label>
+            <p>Пароль:</p>
+            <input type="password" onChange={(e) => setPassword(e.target.value)} />
+          </label>
         </div>
         <div className="btn btn-block">
           <button type="submit">войти</button>

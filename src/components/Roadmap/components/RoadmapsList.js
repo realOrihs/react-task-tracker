@@ -1,25 +1,27 @@
-import React, { useState } from "react";
-import { Link, generatePath, useRouteMatch } from "react-router-dom";
+import React, { useState } from 'react';
+import { Link, generatePath, useRouteMatch } from 'react-router-dom';
 
-const RoadmapsListComponent = () => {
-    const [campaignList, setCampaignList] = useState([
-        { id: 1, name: "Roadmap1" },
-        { id: 2, name: "Roadmap2" },
-        { id: 3, name: "Roadmap3" },
-        { id: 4, name: "Roadmap4" },
-        { id: 5, name: "Roadmap5" }
-    ]);
-    const { url } = useRouteMatch();
+const RoadmapsListComponent = (props) => {
+  const { url } = useRouteMatch();
 
-    return (
-        <div style={{ width: "90%" }}>
-            {campaignList.map(({ id, name }) => (
-                <div key={id}>
-                    <Link to={generatePath(`${url}/:id`, { id })}>{name}</Link>
-                </div>
-            ))}
+  return (
+    <div style={{ width: '90%' }}>
+      {props.roadmapsList.map((item, index) => (
+        <div className="roadmapli" key={`roadmap${item.id}`}>
+          <Link to={`/currentRoadmap/${item.id}`} onClick={() => props.setRoadmap(item)}>{item.name}</Link>
+          <div>
+            {item.creator}
+          </div>
+          <div>
+            {item.type_of_access}
+          </div>
+          <div>
+            {item.date}
+          </div>
         </div>
-    );
+      ))}
+    </div>
+  );
 };
 
 export default RoadmapsListComponent;
