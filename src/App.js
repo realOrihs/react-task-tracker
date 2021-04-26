@@ -3,9 +3,9 @@ import {
   BrowserRouter, Route, Switch, Redirect,
 } from 'react-router-dom';
 import React, { useState } from 'react';
-import Header from './components/Header';
-import Tasks from './components/Tasks';
-import AddTask from './components/AddTask';
+import Header from './components/TaskTracker/Header';
+import Tasks from './components/TaskTracker/Tasks';
+import AddTask from './components/TaskTracker/AddTask';
 import Preferences from './components/Preferences';
 import Dashboard from './components/Dashboard';
 import Login from './components/Login';
@@ -43,6 +43,13 @@ const App = () => {
     setTasks([...tasks, newTask]);
   };
 
+  // Add Roadmap
+  const addRoadmap = (roadmap) => {
+    const id = roadmapsList.length + 1;
+    const newRoadmap = { id, ...roadmap };
+    setRoadmapsList([...tasks, newRoadmap]);
+  };
+
   // Delete Task
   const deleteTask = (id) => {
     setTasks(tasks.filter((task) => task.id !== id));
@@ -69,7 +76,6 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            <AddRoadmapComponent roadmapsList={roadmapsList} setRoadmapsList={setRoadmapsList}/>
             {/* <Redirect to="/task-tracker" /> */}
             <RoadmapsListComponent roadmapsList={roadmapsList} setRoadmapsList={setRoadmapsList} setRoadmap={setRoadmap}/>
             <div>
@@ -80,6 +86,9 @@ const App = () => {
               {/*  ))} */}
               {/* </ul> */}
             </div>
+          </Route>
+          <Route path="/addRoadMap">
+            <AddRoadmapComponent/>
           </Route>
           <Route path={"/currentRoadmap/:id?"}>
             <Roadmap roadmap={roadmap}/>
