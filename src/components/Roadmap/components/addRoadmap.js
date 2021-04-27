@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import {Redirect} from 'react-router-dom';
 
-const AddRoadmap = ({onAdd}) => {
+const AddRoadmap = (props) => {
     const [name, setName] = useState('');
     const [day, setDay] = useState('');
     const [creator, setCreator] = useState('');
@@ -13,9 +14,16 @@ const AddRoadmap = ({onAdd}) => {
             alert('Please add a roadmap');
             return;
         }
-
-        onAdd({text: name, day, creator, typeOfAccess});
-
+        props.setRoadmapsList(
+            [...props.roadmapsList, {
+                id: props.roadmapsList[props.roadmapsList.length-1].id+1,
+                name,
+                date: day,
+                creator,
+                type_of_access: 'redact'
+            }]
+        )
+        window.location='/';
         setName('');
         setDay('');
         setCreator('');
