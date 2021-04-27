@@ -1,6 +1,6 @@
 /* eslint-disable no-template-curly-in-string */
 import {
-  BrowserRouter, Route, Switch, Redirect,
+  BrowserRouter, Route, Switch, Redirect, useHistory, Router
 } from 'react-router-dom';
 import React, { useState } from 'react';
 import Header from './components/TaskTracker/Header';
@@ -14,12 +14,14 @@ import RoadmapsListComponent from './components/Roadmap/components/RoadmapsList'
 import SearchBarComponent from './components/SearchBar/SearchBar';
 import AddRoadmapComponent from "./components/Roadmap/components/addRoadmap";
 import Roadmap from "./components/Roadmap/components/Roadmap";
+import Button from "./components/TaskTracker/Button";
+
 
 const App = () => {
+  let history = useHistory();
   const { token, setToken } = useToken();
   const [showAddTask, setShowAddTask] = useState(false);
   const [tasks, setTasks] = useState([
-
     {
       id: 1,
       text: 'Project Meeting',
@@ -42,6 +44,10 @@ const App = () => {
     const newTask = { id, ...task };
     setTasks([...tasks, newTask]);
   };
+
+  const handleClick = () => {
+    history.push("/home");
+  }
 
   // Add Roadmap
   const addRoadmap = (roadmap) => {
@@ -74,55 +80,62 @@ const App = () => {
     <div className="main">
       <h1 className="wrapper">Application</h1>
       <BrowserRouter>
-        <Switch>
-          <Route exact path="/">
-            {/* <Redirect to="/task-tracker" /> */}
-            <RoadmapsListComponent roadmapsList={roadmapsList} setRoadmapsList={setRoadmapsList} setRoadmap={setRoadmap}/>
-            <div>
-              <SearchBarComponent />
-              {/* <ul> */}
-              {/*  {RoadmapsListComponent.map((map) => ( */}
-              {/*      <li key={map.id}>(map.name)</li> */}
-              {/*  ))} */}
-              {/* </ul> */}
-            </div>
-          </Route>
-          <Route path="/addRoadMap">
-            <AddRoadmapComponent/>
-          </Route>
-          <Route path={"/currentRoadmap/:id?"}>
-            <Roadmap roadmap={roadmap}/>
-          </Route>
-          <div className="container">
-            <Route path="/task-tracker">
-              <Header
-                onAdd={() => setShowAddTask(!showAddTask)}
-                showAdd={showAddTask}
-              />
-              {showAddTask && (
-                <AddTask onAdd={addTask} />
-              )}
-
-              {tasks.length > 0
-                ? (
-                  <Tasks
-                    tasks={tasks}
-                    onDelete={deleteTask}
-                    onToggle={toggleReminder}
-                  />
-                )
-                : 'No Tasks To Show'}
+        <Router history = {history}>
+          <Switch>
+            <Route exact path="/">
+              {/* <Redirect to="/task-tracker" /> */}
+              <button onClick={handleClick}>
+                <Redirect to="/addRoadMap">
+                  <AddRoadmapComponent/>
+                </Redirect>
+              </button>
+              <RoadmapsListComponent roadmapsList={roadmapsList} setRoadmapsList={setRoadmapsList} setRoadmap={setRoadmap}/>
+              <div>
+                <SearchBarComponent />
+                {/* <ul> */}
+                {/*  {RoadmapsListComponent.map((map) => ( */}
+                {/*      <li key={map.id}>(map.name)</li> */}
+                {/*  ))} */}
+                {/* </ul> */}
+              </div>
             </Route>
-          </div>
+            {/*<Route path="/addRoadMap">*/}
+            {/*  <AddRoadmapComponent/>*/}
+            {/*</Route>*/}
+            <Route path={"/currentRoadmap/:id?"}>
+              <Roadmap roadmap={roadmap}/>
+            </Route>
+            <div className="container">
+              <Route path="/task-tracker">
+                <Header
+                  onAdd={() => setShowAddTask(!showAddTask)}
+                  showAdd={showAddTask}
+                />
+                {showAddTask && (
+                  <AddTask onAdd={addTask} />
+                )}
 
-          <Route path="/dashboard">
-            <Dashboard />
-          </Route>
+                {tasks.length > 0
+                  ? (
+                    <Tasks
+                      tasks={tasks}
+                      onDelete={deleteTask}
+                      onToggle={toggleReminder}
+                    />
+                  )
+                  : 'No Tasks To Show'}
+              </Route>
+            </div>
 
-          <Route path="/preferences">
-            <Preferences />
-          </Route>
-        </Switch>
+            <Route path="/dashboard">
+              <Dashboard />
+            </Route>
+
+            <Route path="/preferences">
+              <Preferences />
+            </Route>
+          </Switch>
+        </Router>
       </BrowserRouter>
     </div>
   );
