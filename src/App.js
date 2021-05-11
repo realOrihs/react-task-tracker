@@ -14,6 +14,7 @@ import RoadmapsListComponent from './components/Roadmap/components/RoadmapsList'
 import SearchBarComponent from './components/SearchBar/SearchBar';
 import AddRoadmap from './components/Roadmap/components/addRoadmap'
 import Roadmap from "./components/Roadmap/components/Roadmap";
+import Modal from "./components/Modal/Modal"
 import Button from "./components/TaskTracker/Button";
 
 
@@ -64,6 +65,47 @@ const App = () => {
   if (!token) {
     return <Login setToken={setToken} />;
   }
+
+  const [roadmapCardInfo, setRoadmapCardInfo] = useState([
+    {
+      id: 1,
+      name: 'task1',
+      description: 'some description',
+      progress: '52%',
+      colorTag: 'customer1',
+      tags: [ 'tag1', 'tag2', 'tag4', 'tag5', 'tag6', 'tag7', 'tag8', 'tag9', 'tag10' ],
+      people: [ 'fullname1', 'fullname2', 'fullname3', 'fullname4',
+        'fullname5', 'fullname6', 'fullname7', 'fullname8',
+        'fullname9', 'fullname10' ],
+      blocks: [ 'task1', 'task2', 'task3', ],
+      blockedBy: [ 'task1', 'task2', 'task3', ],
+    }
+  ]);
+
+  const [visibility, setVisibility] = useState(false)
+
+  const {dateType, setDateType} = useState([
+    {
+      id: 1,
+      name: 'day',
+      toggle: false,
+    },
+    {
+      id: 2,
+      name: 'week',
+      toggle: false,
+    },
+    {
+      id: 3,
+      name: 'month',
+      toggle: true,
+    },
+    {
+      id: 4,
+      name: 'quarter',
+      toggle: false,
+    }
+  ])
 
   return (
     <div className="main">
@@ -125,6 +167,10 @@ const App = () => {
             </Route>
           </Switch>
         </BrowserRouter>
+      <div>
+        <button onClick={() => setVisibility(!visibility)}>Some roadmap</button>
+      </div>
+      <Modal roadmapCardInfo={roadmapCardInfo} visibility={visibility}/>
     </div>
   );
 };
