@@ -170,7 +170,7 @@ const App = () => {
       <div>
         <button onClick={() => setVisibility(!visibility)}>Some roadmap</button>
       </div>
-      <Modal roadmapCardInfo={roadmapCardInfo} visibility={visibility}/>
+      <Modal roadmapCardInfo={roadmapCardInfo[0]} visibility={visibility}/>
     </div>
   );
 };

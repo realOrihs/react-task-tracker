@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useState, useEffect} from 'react'
 import "./Modal.css"
-
 import Popup from 'reactjs-popup';
 
 
-const Modal = (props) => (
+const Modal = (props) => {
+
+    return(
     <Popup
         open = {props.visibility === true}
         modal
@@ -17,12 +18,10 @@ const Modal = (props) => (
                 </button>
                 <div className="header">
                     {props.roadmapCardInfo.name}
-                    task1
                 </div>
                 <div className="content">
                     <div>
                         {props.roadmapCardInfo.description}
-                        some description
                     </div>
                 </div>
                 <div className="actions">
@@ -34,27 +33,21 @@ const Modal = (props) => (
             <span>
                 <div>
                     {props.roadmapCardInfo.progress}
-                    52%
                 </div>
                 <div>
                     {props.roadmapCardInfo.colorTag}
-                    customer1
                 </div>
                 <div>
                     {props.roadmapCardInfo.tags}
-                    styled array of tags
                 </div>
                 <div>
                     {props.roadmapCardInfo.people}
-                    styled array of people
                 </div>
                 <div>
                     {props.roadmapCardInfo.blocks}
-                    styled array of blocks
                 </div>
                 <div>
                     {props.roadmapCardInfo.blockedBy}
-                    styled array of blockedBy
                 </div>
             </span>
                     </Popup>
@@ -70,7 +63,7 @@ const Modal = (props) => (
                 </div>
             </div>
         )}
-    </Popup>
-);
+    </Popup>)
+};
 
 export default Modal;
